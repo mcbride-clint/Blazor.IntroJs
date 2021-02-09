@@ -1,31 +1,44 @@
 ﻿@page "/ComponentBased"
 
-<BlazorIntro Text="Look at this Story" Title="Now with Title" Hint="Hint, Hint">
-    <MudCard>
-        <MudCardContent>
-            <MudText>Story Time</MudText>
-            <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
-        </MudCardContent>
-    </MudCard>
-</BlazorIntro>
+    <h3>Component Based</h3>
 
-<BlazorIntro Text="Look at this Classy Story, I have my own class" Hint="Hint, Hint" Class="onlyThese">
-    <MudCard>
-        <MudCardContent>
-            <MudText>Classy Story Time</MudText>
-            <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
-        </MudCardContent>
-    </MudCard>
-</BlazorIntro>
+    <p>Short demo of the concepts on the IntroJs Quick Start Page using Blazor Components</p>
 
-<BlazorIntro Text="Look at this StoryLook at this Story" Hint="Hint, Hint" Class="onlyThese">
-    <MudCard>
-        <MudCardContent>
-            <MudText data-intro="Test">Text Area 1</MudText>
-            <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
-        </MudCardContent>
-    </MudCard>
-</BlazorIntro>
+    <BlazorIntro Text="Look at this Story" 
+                 Title="Now with Title" 
+                 Hint="Hint, Hint"
+                 Step="3">
+        <MudCard>
+            <MudCardContent>
+                <MudText>Story Time</MudText>
+                <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+            </MudCardContent>
+        </MudCard>
+    </BlazorIntro>
+
+    <BlazorIntro Text="Look at this Classy Story, I have my own class" 
+                 Hint="Hint, Hint"
+                 Class="onlyThese"
+                 Step="2">
+        <MudCard>
+            <MudCardContent>
+                <MudText>Classy Story Time</MudText>
+                <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+            </MudCardContent>
+        </MudCard>
+    </BlazorIntro>
+
+    <BlazorIntro Text="Look at this StoryLook at this Story" 
+                 Hint="Hint, Hint" 
+                 Class="onlyThese"
+                 Step="1">
+        <MudCard>
+            <MudCardContent>
+                <MudText data-intro="Test">Text Area 1</MudText>
+                <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+            </MudCardContent>
+        </MudCard>
+    </BlazorIntro>
 
 
     <MudButton OnClick="StartIntroJs">Start</MudButton>
