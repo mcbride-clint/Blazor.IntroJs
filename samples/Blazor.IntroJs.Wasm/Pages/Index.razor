@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inject Blazor.IntroJs.IntroJs introJs
+@inject Blazor.IntroJs.IntroJsInterop introJs
 
 <h1 data-intro="Hello World!" data-hint="Hint-Hint">Hello, world!</h1>
 
@@ -7,6 +7,8 @@ Welcome to your new app.
 
 <MudButton OnClick="StartIntroJs">Start Intro Js</MudButton>
 <MudButton OnClick="AddHints">Add Hints</MudButton>
+
+<ParentWithIntro />
 
 @code {
     private async Task StartIntroJs()

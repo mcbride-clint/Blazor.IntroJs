@@ -5,7 +5,7 @@ namespace Blazor.IntroJs.Wasm.Pages
 {
     public partial class QuickStart : ComponentBase
     {
-        [Inject] private IntroJs IntroJs { get; set; }
+        [Inject] private IntroJsInterop IntroJs { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {

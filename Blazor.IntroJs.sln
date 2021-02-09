@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.IntroJs.Wasm", "samples\Blazor.IntroJs.Wasm\Blazor.IntroJs.Wasm.csproj", "{78D34C58-F647-4991-934A-2D0C75797D51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.IntroJs", "src\Blazor.IntroJs\Blazor.IntroJs.csproj", "{FA3DDBB4-0082-4E1E-8AF0-B31A7C834A9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.IntroJs", "src\Blazor.IntroJs\Blazor.IntroJs.csproj", "{FA3DDBB4-0082-4E1E-8AF0-B31A7C834A9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

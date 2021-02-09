@@ -1,0 +1,28 @@
+﻿@page "/JsonConfig"
+@inject IntroJsInterop IntroJs
+
+
+<h3>JsonConfig</h3>
+
+<p id="t1">Text 1</p>
+<p id="t2">Text 2</p>
+<p id="t3">Text 3</p>
+
+<MudButton OnClick="ShowIntro">
+    Show Intro
+</MudButton>
+
+@code {
+
+    private async Task ShowIntro()
+    {
+        var options = IntroJs.CreateNewOptions();
+        options.Steps = new List<Step>();
+        options.Steps.Add(new Step() { Element = "#t1", Intro = "Test Manual Setup 1", Title = "Test Title" });
+        options.Steps.Add(new Step() { Element = "#t2", Intro = "Test Manual Setup 2", Title = "Test Title" });
+        options.Steps.Add(new Step() { Element = "#t3", Intro = "Test Manual Setup 3", Title = "Test Title" });
+        options.Steps.Add(new Step() { Intro = "Test Floating Element", Title = "Test Title" });
+
+        await IntroJs.Start(options);
+    }
+}

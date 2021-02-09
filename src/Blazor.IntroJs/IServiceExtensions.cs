@@ -9,7 +9,16 @@ namespace Blazor.IntroJs
     {
         public static IServiceCollection AddIntroJs(this IServiceCollection services)
         {
-            services.AddScoped<IntroJs>();
+            services.AddScoped<IntroJsInterop>();
+            services.AddSingleton<IntroJsOptions>(_ => null);
+
+            return services;
+        }
+
+        public static IServiceCollection AddIntroJs(this IServiceCollection services, Func<IntroJsOptions> func)
+        {
+            services.AddScoped<IntroJsInterop>();
+            services.AddSingleton<IntroJsOptions>(_ => func.Invoke());
 
             return services;
         }

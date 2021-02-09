@@ -2,10 +2,46 @@
 // wrapped in a .NET API
 
 window.blazorIntroJs = {
+    customOptions: null,
     start: function (elementSelection) {
-        introJs(elementSelection).start();
+        try {
+            if (blazorIntroJs.customOptions) {
+                introJs(elementSelection).setOptions(blazorIntroJs.customOptions).start();
+            }
+            else {
+                introJs(elementSelection).start();
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
     },
-    addHints: function () {
-        introJs().addHints();
+    startWithOptions: function (options) {
+
+        if (options) {
+            introJs().setOptions(options).start();
+        } else {
+            introJs().start();
+        }
+    },
+    addHints: function (step) {
+        if (blazorIntroJs.customOptions) {
+            introJs().setOptions(blazorIntroJs.customOptions).addHints(step);
+        } else {
+            introJs().addHints(step);
+        }
+    },
+    hideHints: function (step) {
+        introJs().hideHints(step);
+    },
+    removeHints: function (step) {
+        introJs().removeHints(step);
+    },
+    showHintDialog: function (step) {
+        introJs().showHintDialog(step);
+    },
+    setOptions: function (options) {
+        blazorIntroJs.customOptions = options;
     }
+
 };

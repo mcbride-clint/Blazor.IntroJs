@@ -5,29 +5,40 @@ namespace Blazor.IntroJs.Wasm.Pages
 {
     public partial class ComponentBased : ComponentBase
     {
-        [Inject] private IntroJs IntroJs { get; set; }
+        [Inject] private IntroJsInterop introJs { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                await IntroJs.Start();
+                await introJs.Start();
             }
         }
 
         protected async Task StartIntroJs()
         {
-            await IntroJs.Start();
-        }
+            await introJs.Start();
+        }       
+       
 
         protected async Task StartIntroJsClass()
         {
-            await IntroJs.Start(".onlyThese");
+            await introJs.Start(".onlyThese");
         }
 
         protected async Task AddHints()
         {
-            await IntroJs.AddHints();
+            await introJs.AddHints();
+        }
+
+        protected async Task HideHints()
+        {
+            await introJs.HideHints();
+        }
+
+        protected async Task RemoveHints()
+        {
+            await introJs.RemoveHints();
         }
     }
 }

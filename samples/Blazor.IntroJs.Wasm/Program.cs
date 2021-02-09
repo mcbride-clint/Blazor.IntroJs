@@ -19,7 +19,11 @@ namespace Blazor.IntroJs.Wasm
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddIntroJs();
+            builder.Services.AddIntroJs(() => new IntroJsOptions()
+            {
+                ShowProgress = true,
+                ShowBullets = false
+            });
 
             builder.Services.AddMudServices();
 
