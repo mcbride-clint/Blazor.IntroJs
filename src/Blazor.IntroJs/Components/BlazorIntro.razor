@@ -1,7 +1,14 @@
-﻿<div data-intro="@Text"
-     data-hint="@Hint"
-     data-step="@Step"
-     data-title="@Title"
-     data-position="@(Position.ToString().ToLower())">
-    @ChildContent
-</div>
+﻿@if (Floating)
+{
+}
+else
+{
+    <div data-intro="@Text"
+         data-hint="@Hint"
+         data-step="@Step"
+         data-title="@Title"
+         data-position="@(Position.ToString().ToLower())"
+         class="@Class">
+        @ChildContent
+    </div>
+}

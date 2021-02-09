@@ -10,6 +10,7 @@ namespace Blazor.IntroJs.Components
         [Parameter] public int? Step { get; set; }
         [Parameter] public IntroJsPosition Position { get; set; } = IntroJsPosition.Bottom;
         [Parameter] public bool Floating { get; set; } = false;
+        [Parameter] public string Class { get; set; }
 
         [Parameter] public RenderFragment ChildContent { get; set; }
     }
