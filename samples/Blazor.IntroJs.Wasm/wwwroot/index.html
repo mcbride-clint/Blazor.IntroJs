@@ -6,12 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Blazor.IntroJs.Wasm</title>
     <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
-    <link href="https://unpkg.com/intro.js/minified/introjs.min.css" rel="stylesheet" />
-    <link href="Blazor.IntroJs.Wasm.styles.css" rel="stylesheet" />
+
     <link href="manifest.json" rel="manifest" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+
+    <!-- Mudblazor Only For Samples -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
+    <!-- Blazor Intro Js -->
+    <link href="https://unpkg.com/intro.js/minified/introjs.min.css" rel="stylesheet" />
+    <link href="Blazor.IntroJs.Wasm.styles.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -23,7 +29,13 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+
+    <!-- Blazor Intro Js -->
     <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+    <script src="_content/Blazor.IntroJs/blazor.intro.js"></script>
+
+    <!-- Mudblazor Only For Samples -->
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
 </body>
 
