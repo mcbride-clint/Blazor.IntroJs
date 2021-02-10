@@ -140,8 +140,6 @@ introJs.fn.addEvents = function () {
             blazorIntroJs.dotNetRef.invokeMethod("OnHintCloseJsEvent");
         })
         .onbeforeexit(function () {
-            var result = blazorIntroJs.dotNetRef.invokeMethod("OnBeforeExitJsEvent");
-            console.log(result);
-            return result;
+            return blazorIntroJs.dotNetRef.invokeMethod("OnBeforeExitJsEvent");
         });
 }
