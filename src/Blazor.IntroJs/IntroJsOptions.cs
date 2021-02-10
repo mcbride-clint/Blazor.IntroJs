@@ -70,7 +70,8 @@ namespace Blazor.IntroJs
         public string ButtonClass { get; set; } = "introjs-button";
         /* additional classes to put on progress bar */
         public bool ProgressBarAdditionalClass { get; set; } = false;
-        public List<Step> Steps { get; set; }
+        public List<IntroJsStep> Steps { get; set; }
+        public List<IntroJsHint> Hints { get; set; }
 
 
         internal IntroJsOptions Clone()

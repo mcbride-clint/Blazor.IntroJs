@@ -1,6 +1,6 @@
 ﻿namespace Blazor.IntroJs
 {
-    public class Step
+    public class IntroJsStep
     {
         public string Title { get; set; }
         public string Element { get; set; }

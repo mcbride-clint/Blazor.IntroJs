@@ -1,14 +1,9 @@
-﻿@if (Floating)
-{
-}
-else
-{
-    <div data-intro="@Text"
+﻿    <div data-intro="@Text"
          data-hint="@Hint"
+         data-hintPosition="@HintPosition.ConvertToString()"
          data-step="@Step"
          data-title="@Title"
          data-position="@(Position.ToString().ToLower())"
          class="@Class">
         @ChildContent
     </div>
-}
