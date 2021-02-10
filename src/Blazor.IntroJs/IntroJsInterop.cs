@@ -246,42 +246,71 @@ namespace Blazor.IntroJs
             _events.OnComplete = callback;
             return this;
         }
-
+        /// <summary>
+        /// Given callback function will be called after starting a new step of introduction. 
+        /// The callback function receives the element of the new step as an argument.
+        /// </summary>
         public IntroJsInterop OnAfterChange(Action<string> callback)
         {
             _events.OnAfterChange = callback;
             return this;
         }
+        /// <summary>
+        /// Given callback function will be called before starting a new step of introduction. 
+        /// The callback function receives the element of the new step as an argument.
+        /// </summary>
         public IntroJsInterop OnBeforeChange(Action<string> callback)
         {
             _events.OnBeforeChange = callback;
             return this;
         }
+        /// <summary>
+        /// Set callback to change of each step of introduction. 
+        /// Given callback function will be called after completing each step. 
+        /// The callback function receives the element of the new step as an argument.
+        /// </summary>
         public IntroJsInterop OnChange(Action<string> callback)
         {
             _events.OnChange = callback;
             return this;
         }
+        /// <summary>
+        /// Works exactly same as onexit but calls before closing the tour. 
+        /// Also, returning false would prevent the tour from closing.
+        /// </summary>
         public IntroJsInterop OnBeforeExit(Func<bool> callback)
         {
             _events.OnBeforeExit = callback;
             return this;
         }
+        /// <summary>
+        /// Set callback to exit of introduction. 
+        /// Exit also means pressing ESC key and clicking on the overlay layer by the user.
+        /// </summary>
         public IntroJsInterop OnExit(Action callback)
         {
             _events.OnExit = callback;
             return this;
         }
+        /// <summary>
+        /// Invokes given function when user clicks on one of hints.
+        /// </summary>
         public IntroJsInterop OnHintClick(Action callback)
         {
             _events.OnHintClick = callback;
             return this;
         }
+        /// <summary>
+        /// Set callback for when a single hint removes from page (e.g. when user clicks on “Got it” button)
+        /// </summary>
         public IntroJsInterop OnHintClose(Action callback)
         {
             _events.OnHintClose = callback;
             return this;
         }
+        /// <summary>
+        /// Invokes given callback function after adding and rendering all hints.
+        /// </summary>
         public IntroJsInterop OnHintsAdded(Action callback)
         {
             _events.OnHintsAdded = callback;
