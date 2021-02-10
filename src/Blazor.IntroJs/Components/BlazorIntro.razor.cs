@@ -2,6 +2,9 @@
 
 namespace Blazor.IntroJs.Components
 {
+    /// <summary>
+    /// Wraps inner syntax in a IntroJs step
+    /// </summary>
     public partial class BlazorIntro : ComponentBase
     {
         [Parameter] public string Title { get; set; }

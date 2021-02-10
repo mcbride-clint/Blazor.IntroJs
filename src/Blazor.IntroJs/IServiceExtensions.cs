@@ -1,26 +1,47 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Blazor.IntroJs
 {
+    /// <summary>
+    /// IServiceCollection Extensions to add IntroJs objects to services
+    /// </summary>
     public static class IServiceExtensions
     {
-        public static IServiceCollection AddIntroJs(this IServiceCollection services)
+        /// <summary>
+        /// Adds IntroJs classes to Service collection using default IntroJs Options
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddIntroJs(this IServiceCollection services, IConfiguration configuration = null)
         {
+            IntroJsOptions options = null;
+
+            if (configuration != null)
+            {
+                options = configuration.GetSection("IntroJsOptions").Get<IntroJsOptions>();
+            }
+
             services.AddTransient<IntroJsInterop>();
-            services.AddTransient<IntroJsInteropEvents>(_ => null);
-            services.AddSingleton<IntroJsOptions>(_ => null);
+            services.AddTransient<IntroJsInteropEvents>();
+            services.AddScoped<IntroJsOptions>(_ => options);
 
             return services;
         }
 
+        /// <summary>
+        /// Adds IntroJs classes to Service collection using IntroJsOptions created by function
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
         public static IServiceCollection AddIntroJs(this IServiceCollection services, Func<IntroJsOptions> func)
         {
             services.AddTransient<IntroJsInterop>();
             services.AddTransient<IntroJsInteropEvents>();
-            services.AddSingleton<IntroJsOptions>(_ => func.Invoke());
+            services.AddScoped<IntroJsOptions>(_ => func.Invoke());
 
             return services;
         }
