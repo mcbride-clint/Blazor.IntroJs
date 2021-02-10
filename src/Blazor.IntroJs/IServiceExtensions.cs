@@ -9,7 +9,8 @@ namespace Blazor.IntroJs
     {
         public static IServiceCollection AddIntroJs(this IServiceCollection services)
         {
-            services.AddScoped<IntroJsInterop>();
+            services.AddTransient<IntroJsInterop>();
+            services.AddTransient<IntroJsInteropEvents>(_ => null);
             services.AddSingleton<IntroJsOptions>(_ => null);
 
             return services;
@@ -17,7 +18,8 @@ namespace Blazor.IntroJs
 
         public static IServiceCollection AddIntroJs(this IServiceCollection services, Func<IntroJsOptions> func)
         {
-            services.AddScoped<IntroJsInterop>();
+            services.AddTransient<IntroJsInterop>();
+            services.AddTransient<IntroJsInteropEvents>();
             services.AddSingleton<IntroJsOptions>(_ => func.Invoke());
 
             return services;

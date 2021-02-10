@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Blazor.IntroJs.Wasm.Pages
@@ -11,8 +12,15 @@ namespace Blazor.IntroJs.Wasm.Pages
         {
             if (firstRender)
             {
-                await IntroJs.Start();
+                await IntroJs
+                    .OnBeforeExit(OnExit)
+                    .Start();
             }
+        }
+
+        protected bool OnExit()
+        {
+            return true;
         }
 
         protected async Task StartIntroJs()
@@ -22,12 +30,12 @@ namespace Blazor.IntroJs.Wasm.Pages
 
         protected async Task StartIntroJsClass()
         {
-            await IntroJs.Start(".onlyThese");
+            await IntroJs.Start("#onlyThese");
         }
 
         protected async Task AddHints()
         {
-            await IntroJs.AddHints();
+            await IntroJs.ShowHints();
         }
     }
 }

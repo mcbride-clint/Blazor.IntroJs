@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using System;
 using System.Threading.Tasks;
 
 namespace Blazor.IntroJs
@@ -6,11 +7,13 @@ namespace Blazor.IntroJs
     public class IntroJsInterop
     {
         private readonly IJSRuntime _jsRuntime;
+        private readonly IntroJsInteropEvents _events;
         private IntroJsOptions _options;
         private bool _customOptionsNeedApplied = false;
-        public IntroJsInterop(IJSRuntime jsRuntime, IntroJsOptions options)
+        public IntroJsInterop(IJSRuntime jsRuntime, IntroJsInteropEvents events, IntroJsOptions options)
         {
             _jsRuntime = jsRuntime;
+            _events = events;
             if (options is null)
             {
                 _options = new IntroJsOptions();
@@ -22,6 +25,18 @@ namespace Blazor.IntroJs
             }
         }
 
+        public async Task Initialize()
+        {
+            var objRef = DotNetObjectReference.Create(_events);
+            await _jsRuntime.InvokeVoidAsync("blazorIntroJs.initialize", objRef);
+
+            await ShouldUpdateOptions();
+        }
+
+        /// <summary>
+        /// Create a new instance of current IntroJs options.  Can be used for one-off settings or manual configuration of Steps and Hints.
+        /// </summary>
+        /// <returns></returns>
         public IntroJsOptions CreateNewOptions()
         {
             return _options.Clone();
@@ -41,7 +56,7 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task Start()
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.start");
         }
 
@@ -52,13 +67,29 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task Start(string elementSelection)
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.start", elementSelection);
         }
 
+        /// <summary>
+        /// Start the introduction given an options object.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
         public async Task Start(IntroJsOptions options)
         {
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.startWithOptions", options);
+        }
+
+        /// <summary>
+        /// Start the introduction given an options object for defined element(s).
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="elementSelection">Specific id (#) or class (.)</param>
+        /// <returns></returns>
+        public async Task Start(IntroJsOptions options, string elementSelection)
+        {
+            await _jsRuntime.InvokeVoidAsync("blazorIntroJs.startWithOptions", options, elementSelection);
         }
 
         /// <summary>
@@ -68,7 +99,7 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task GoToStep(int step)
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.goToStep", step);
         }
 
@@ -79,7 +110,7 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task GoToStepNumber(int step)
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.goToStepNumber", step);
         }
 
@@ -99,7 +130,7 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task Refresh()
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.refresh");
         }
 
@@ -110,7 +141,7 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task ShowHint(int hintId)
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.showHint", hintId);
         }
 
@@ -120,7 +151,7 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task ShowHints()
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.showHints");
         }
 
@@ -130,7 +161,7 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task AddHints()
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.addHints");
         }
 
@@ -140,7 +171,7 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task HideHints()
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.hideHints");
         }
 
@@ -151,7 +182,7 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task HideHint(int stepId)
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.hideHint", stepId);
         }
 
@@ -162,19 +193,19 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public async Task ShowHintDialog(int stepId)
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.showHintDialog", stepId);
         }
 
         public async Task RemoveHints()
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.removeHints");
         }
 
         public async Task RemoveHints(int step)
         {
-            await ShouldUpdateOptions();
+            await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.removeHints", step);
         }
 
@@ -195,6 +226,66 @@ namespace Blazor.IntroJs
         {
             _options = new IntroJsOptions();
             await ApplyOptions();
+        }
+
+        // *******************************************
+        // Events
+        // *******************************************
+
+        public IntroJsInterop ClearEvents()
+        {
+            _events.ClearEvents();
+            return this;
+        }
+
+        /// <summary>
+        /// Set callback for when introduction completed.
+        /// </summary>
+        public IntroJsInterop OnComplete(Action callback)
+        {
+            _events.OnComplete = callback;
+            return this;
+        }
+
+        public IntroJsInterop OnAfterChange(Action<string> callback)
+        {
+            _events.OnAfterChange = callback;
+            return this;
+        }
+        public IntroJsInterop OnBeforeChange(Action<string> callback)
+        {
+            _events.OnBeforeChange = callback;
+            return this;
+        }
+        public IntroJsInterop OnChange(Action<string> callback)
+        {
+            _events.OnChange = callback;
+            return this;
+        }
+        public IntroJsInterop OnBeforeExit(Func<bool> callback)
+        {
+            _events.OnBeforeExit = callback;
+            return this;
+        }
+        public IntroJsInterop OnExit(Action callback)
+        {
+            _events.OnExit = callback;
+            return this;
+        }
+        public IntroJsInterop OnHintClick(Action callback)
+        {
+            _events.OnHintClick = callback;
+            return this;
+        }
+        public IntroJsInterop OnHintClose(Action callback)
+        {
+            _events.OnHintClose = callback;
+            return this;
+        }
+        public IntroJsInterop OnHintsAdded(Action callback)
+        {
+            _events.OnHintsAdded = callback;
+            return this;
         }
     }
 }
