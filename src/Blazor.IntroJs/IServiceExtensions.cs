@@ -21,7 +21,7 @@ namespace Blazor.IntroJs
 
             if (configuration != null)
             {
-                options = configuration.GetSection("IntroJsOptions").Get<IntroJsOptions>();
+                options = configuration.GetSection(nameof(IntroJsOptions)).Get<IntroJsOptions>();
             }
 
             services.AddTransient<IntroJsInterop>();

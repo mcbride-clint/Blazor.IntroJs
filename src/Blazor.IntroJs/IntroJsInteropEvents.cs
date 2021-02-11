@@ -3,6 +3,9 @@ using System;
 
 namespace Blazor.IntroJs
 {
+    /// <summary>
+    /// IntroJs Events that are triggered via JavaScript
+    /// </summary>
     public class IntroJsInteropEvents
     {
 
@@ -53,6 +56,9 @@ namespace Blazor.IntroJs
         /// </summary>
         public Action OnHintClose { get; set; }
 
+        /// <summary>
+        /// Resets all event callbacks to null
+        /// </summary>
         public void ClearEvents()
         {
             OnComplete = null;
@@ -67,54 +73,82 @@ namespace Blazor.IntroJs
             OnHintClose = null;
         }
 
+        /// <summary>
+        /// Method to Trigger OnComplete Action.  JsInvokable
+        /// </summary>
         [JSInvokable]
         public void OnCompleteJsEvent()
         {
             OnComplete?.Invoke();
         }
 
+        /// <summary>
+        /// Method to Trigger OnExit Action.  JsInvokable
+        /// </summary>
         [JSInvokable]
         public void OnExitJsEvent()
         {
             OnExit?.Invoke();
         }
 
+        /// <summary>
+        /// Method to Trigger OnChange Action.  JsInvokable
+        /// </summary>
         [JSInvokable]
         public void OnChangeJsEvent(string targetElement)
         {
             OnChange?.Invoke(targetElement);
         }
 
+        /// <summary>
+        /// Method to Trigger OnBeforeChange Action.  JsInvokable
+        /// </summary>
         [JSInvokable]
         public void OnBeforeChangeJsEvent(string targetElement)
         {
             OnBeforeChange?.Invoke(targetElement);
         }
 
+        /// <summary>
+        /// Method to Trigger OnAfterChange Action.  JsInvokable
+        /// </summary>
         [JSInvokable]
         public void OnAfterChangeJsEvent(string targetElement)
         {
             OnAfterChange?.Invoke(targetElement);
         }
 
+        /// <summary>
+        /// Method to Trigger OnHintClick Action.  JsInvokable
+        /// </summary>
         [JSInvokable]
         public void OnHintClickJsEvent()
         {
             OnHintClick?.Invoke();
         }
 
+        /// <summary>
+        /// Method to Trigger OnHintsAdded Action.  JsInvokable
+        /// </summary>
         [JSInvokable]
         public void OnHintsAddedJsEvent()
         {
             OnHintsAdded?.Invoke();
         }
 
+        /// <summary>
+        /// Method to Trigger OnHintClose Action.  JsInvokable
+        /// </summary>
         [JSInvokable]
         public void OnHintCloseJsEvent()
         {
             OnHintClose?.Invoke();
         }
 
+        /// <summary>
+        /// Method to Trigger OnBeforeExit Func.  JsInvokable
+        /// </summary>
+        /// <returns>bool</returns>
         [JSInvokable]
         public bool OnBeforeExitJsEvent()
         {

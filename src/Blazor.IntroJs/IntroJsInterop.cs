@@ -4,12 +4,22 @@ using System.Threading.Tasks;
 
 namespace Blazor.IntroJs
 {
+    /// <summary>
+    /// Used to interact with the IntroJs javascript functions through JSInterop
+    /// </summary>
     public class IntroJsInterop
     {
         private readonly IJSRuntime _jsRuntime;
         private readonly IntroJsInteropEvents _events;
         private IntroJsOptions _options;
-        private bool _customOptionsNeedApplied = false;
+        private readonly bool _customOptionsNeedApplied = false;
+
+        /// <summary>
+        /// Instantiate a new instance IntroJsInterop
+        /// </summary>
+        /// <param name="jsRuntime"></param>
+        /// <param name="events"></param>
+        /// <param name="options"></param>
         public IntroJsInterop(IJSRuntime jsRuntime, IntroJsInteropEvents events, IntroJsOptions options)
         {
             _jsRuntime = jsRuntime;
@@ -25,7 +35,7 @@ namespace Blazor.IntroJs
             }
         }
 
-        public async Task Initialize()
+        private async Task Initialize()
         {
             var objRef = DotNetObjectReference.Create(_events);
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.initialize", objRef);
@@ -197,12 +207,24 @@ namespace Blazor.IntroJs
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.showHintDialog", stepId);
         }
 
+        /// <summary>
+        /// Found in the source code.  
+        /// Seems to actually hide the Hints and allows them to be reshown later.  
+        /// Not sure if supported.
+        /// </summary>
+        /// <returns></returns>
         public async Task RemoveHints()
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.removeHints");
         }
 
+        /// <summary>
+        /// Found in the source code.  
+        /// Seems to actually hide the Hints and allows them to be reshown later.  
+        /// Not sure if supported.
+        /// </summary>
+        /// <returns></returns>
         public async Task RemoveHints(int step)
         {
             await Initialize();
@@ -232,6 +254,10 @@ namespace Blazor.IntroJs
         // Events
         // *******************************************
 
+        /// <summary>
+        /// Reset all IntroJs Events
+        /// </summary>
+        /// <returns></returns>
         public IntroJsInterop ClearEvents()
         {
             _events.ClearEvents();

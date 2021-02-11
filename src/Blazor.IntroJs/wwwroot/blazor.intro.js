@@ -122,13 +122,13 @@ introJs.fn.addEvents = function () {
             blazorIntroJs.dotNetRef.invokeMethod("OnExitJsEvent");
         })
         .onchange(function (targetElement) {
-            blazorIntroJs.dotNetRef.invokeMethodAsync("OnChangeJsEvent", targetElement.localName);
+            blazorIntroJs.dotNetRef.invokeMethod("OnChangeJsEvent", targetElement.localName);
         })
         .onbeforechange(function (targetElement) {
-            blazorIntroJs.dotNetRef.invokeMethodAsync("OnBeforeChangeJsEvent", targetElement.localName);
+            blazorIntroJs.dotNetRef.invokeMethod("OnBeforeChangeJsEvent", targetElement.localName);
         })
         .onafterchange(function (targetElement) {
-            blazorIntroJs.dotNetRef.invokeMethodAsync("OnAfterChangeJsEvent", targetElement.localName);
+            blazorIntroJs.dotNetRef.invokeMethod("OnAfterChangeJsEvent", targetElement.localName);
         })
         .onhintclick(function () {
             blazorIntroJs.dotNetRef.invokeMethod("OnHintClickJsEvent");
