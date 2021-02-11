@@ -27,17 +27,17 @@ namespace Blazor.IntroJs
         /// Given callback function will be called after completing each step. 
         /// The callback function receives the element of the new step as an argument.
         /// </summary>
-        public Action<string> OnChange { get; set; }
+        public Action<object> OnChange { get; set; }
         /// <summary>
         /// Given callback function will be called before starting a new step of introduction. 
         /// The callback function receives the element of the new step as an argument.
         /// </summary>
-        public Action<string> OnBeforeChange { get; set; }
+        public Action<object> OnBeforeChange { get; set; }
         /// <summary>
         /// Given callback function will be called after starting a new step of introduction. 
         /// The callback function receives the element of the new step as an argument.
         /// </summary>
-        public Action<string> OnAfterChange { get; set; }
+        public Action<object> OnAfterChange { get; set; }
         /// <summary>
         /// Works exactly same as onexit but calls before closing the tour. 
         /// Also, returning false would prevent the tour from closing.
@@ -95,7 +95,7 @@ namespace Blazor.IntroJs
         /// Method to Trigger OnChange Action.  JsInvokable
         /// </summary>
         [JSInvokable]
-        public void OnChangeJsEvent(string targetElement)
+        public void OnChangeJsEvent(object targetElement)
         {
             OnChange?.Invoke(targetElement);
         }
@@ -104,7 +104,7 @@ namespace Blazor.IntroJs
         /// Method to Trigger OnBeforeChange Action.  JsInvokable
         /// </summary>
         [JSInvokable]
-        public void OnBeforeChangeJsEvent(string targetElement)
+        public void OnBeforeChangeJsEvent(object targetElement)
         {
             OnBeforeChange?.Invoke(targetElement);
         }
@@ -113,7 +113,7 @@ namespace Blazor.IntroJs
         /// Method to Trigger OnAfterChange Action.  JsInvokable
         /// </summary>
         [JSInvokable]
-        public void OnAfterChangeJsEvent(string targetElement)
+        public void OnAfterChangeJsEvent(object targetElement)
         {
             OnAfterChange?.Invoke(targetElement);
         }

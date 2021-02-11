@@ -23,6 +23,6 @@
         options.Steps.Add(new IntroJsStep() { Element = "#t3", Intro = "Test Manual Setup 3", Title = "Test Title" });
         options.Steps.Add(new IntroJsStep() { Intro = "Test Floating Element", Title = "Test Title" });
 
-        await IntroJs.Start(options);
+        await IntroJs.SetOptions(_ => options).Start();
     }
 }

@@ -1,21 +1,40 @@
 // This file is to show how a library package may provide JavaScript interop features
 // wrapped in a .NET API
 
+
+
 window.blazorIntroJs = {
-    customOptions: null,
-    dotNetRef: null,
+    introJsInstances: {},
+    applyStepStatus: function (introJs, status) {
+        if (status.goToStep) {
+            introJs.goToStep(status.goToStep);
+        }
+
+        if (status.goToStepNumber) {
+            introJs.goToStepNumber(status.goToStepNumber);
+        }
+    },
+    applyTargetElement: function (id, elementSelection) {
+        if (typeof elementSelection === "string") {
+            //select the target element with query selector
+            const targetElement = document.querySelector(elementSelection);
+
+            if (targetElement) {
+                this.introJsInstances[id]._targetElement = targetElement;
+            } else {
+                throw new Error("There is no element with given selector.");
+            }
+        }
+    },
     /** 
      *  Implemented
     */
-    start: function (elementSelection) {
+    start: function (id, status, elementSelection) {
+        this.applyTargetElement(id, elementSelection);
+        this.applyStepStatus(this.introJsInstances[id], status);
+
         try {
-            if (blazorIntroJs.customOptions) {
-                introJs(elementSelection).addEvents().setOptions(blazorIntroJs.customOptions).start();
-            }
-            else {
-                introJs(elementSelection).addEvents().start();
-            }
-            var x = 0;
+            this.introJsInstances[id].start();
         }
         catch (e) {
             console.log(e);
@@ -24,122 +43,111 @@ window.blazorIntroJs = {
     /**
     *  Implemented
     */
-    startWithOptions: function (options) {
-
-        if (options) {
-            introJs().setOptions(options).addEvents().start();
-        } else {
-            introJs().addEvents().start();
-        }
+    goToStep: function (id, step) {
+        this.introJsInstances[id].goToStep(step);
     },
     /**
     *  Implemented
     */
-    goToStep: function (step) {
-        introJs().goToStep(step).addEvents().start();
+    goToStepNumber: function (id, step) {
+        this.introJsInstances[id].goToStepNumber(step);
     },
     /**
     *  Implemented
     */
-    goToStepNumber: function (step) {
-        introJs().goToStepNumber(step).addEvents().start();
+    exit: function (id, force) {
+        this.introJsInstances[id].exit(force);
     },
     /**
     *  Implemented
     */
-    exit: function (force) {
-        introJs().exit(force);
+    refresh: function (id) {
+        this.introJsInstances[id].refresh();
     },
     /**
     *  Implemented
     */
-    refresh: function () {
-        introJs().refresh();
+    addHints: function (id) {
+        this.introJsInstances[id].addHints();
     },
     /**
     *  Implemented
     */
-    addHints: function () {
-        if (blazorIntroJs.customOptions) {
-            introJs().setOptions(blazorIntroJs.customOptions).addHints();
-        } else {
-            introJs().addHints();
-        }
+    showHint: function (id, step) {
+        this.introJsInstances[id].showHint(step);
     },
     /**
     *  Implemented
     */
-    showHint: function (step) {
-        introJs().addEvents().showHint(step);
+    showHints: function (id) {
+        this.introJsInstances[id].showHints();
     },
     /**
     *  Implemented
     */
-    showHints: function () {
-        introJs().addEvents().showHints();
+    hideHint: function (id, step) {
+        this.introJsInstances[id].hideHint(step);
     },
     /**
     *  Implemented
     */
-    hideHint: function (step) {
-        introJs().hideHint(step);
+    hideHints: function (id) {
+        this.introJsInstances[id].hideHints();
     },
     /**
     *  Implemented
     */
-    hideHints: function () {
-        introJs().hideHints();
+    removeHints: function (id, step) {
+        this.introJsInstances[id].removeHints(step);
     },
     /**
     *  Implemented
     */
-    removeHints: function (step) {
-        introJs().removeHints(step);
+    showHintDialog: function (id, step) {
+        this.introJsInstances[id].showHintDialog(step);
     },
     /**
     *  Implemented
     */
-    showHintDialog: function (step) {
-        introJs().addEvents().showHintDialog(step);
+    setOptions: function (id, options) {
+        this.introJsInstances[id].setOptions(options);
     },
-    /**
-    *  Implemented
-    */
-    setOptions: function (options) {
-        blazorIntroJs.customOptions = options;
+    initialize: function (id, dotNetRef) {
+        this.introJsInstances[id] = introJs();
+        this.introJsInstances[id].addEvents(dotNetRef);
     },
-    initialize: function (dotNetRef) {
-        blazorIntroJs.dotNetRef = dotNetRef;
+    dispose: function (id) {
+        delete this.introJsInstances[id];
     }
 };
 
-introJs.fn.addEvents = function () {
+introJs.fn.addEvents = function (dotNetRef) {
     return this
         .oncomplete(function () {
-            blazorIntroJs.dotNetRef.invokeMethod("OnCompleteJsEvent");
+            dotNetRef.invokeMethod("OnCompleteJsEvent");
         })
         .onexit(function () {
-            blazorIntroJs.dotNetRef.invokeMethod("OnExitJsEvent");
+            dotNetRef.invokeMethod("OnExitJsEvent");
         })
         .onchange(function (targetElement) {
-            blazorIntroJs.dotNetRef.invokeMethod("OnChangeJsEvent", targetElement.localName);
+            dotNetRef.invokeMethodAsync("OnChangeJsEvent", targetElement);
         })
         .onbeforechange(function (targetElement) {
-            blazorIntroJs.dotNetRef.invokeMethod("OnBeforeChangeJsEvent", targetElement.localName);
+            dotNetRef.invokeMethodAsync("OnBeforeChangeJsEvent", targetElement);
         })
         .onafterchange(function (targetElement) {
-            blazorIntroJs.dotNetRef.invokeMethod("OnAfterChangeJsEvent", targetElement.localName);
+            dotNetRef.invokeMethodAsync("OnAfterChangeJsEvent", targetElement);
         })
         .onhintclick(function () {
-            blazorIntroJs.dotNetRef.invokeMethod("OnHintClickJsEvent");
+            dotNetRef.invokeMethod("OnHintClickJsEvent");
         })
         .onhintsadded(function () {
-            blazorIntroJs.dotNetRef.invokeMethod("OnHintsAddedJsEvent");
+            dotNetRef.invokeMethod("OnHintsAddedJsEvent");
         })
         .onhintclose(function () {
-            blazorIntroJs.dotNetRef.invokeMethod("OnHintCloseJsEvent");
+            dotNetRef.invokeMethod("OnHintCloseJsEvent");
         })
         .onbeforeexit(function () {
-            return blazorIntroJs.dotNetRef.invokeMethod("OnBeforeExitJsEvent");
+            return dotNetRef.invokeMethod("OnBeforeExitJsEvent");
         });
 }

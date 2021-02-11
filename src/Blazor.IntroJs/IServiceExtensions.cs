@@ -26,7 +26,7 @@ namespace Blazor.IntroJs
 
             services.AddTransient<IntroJsInterop>();
             services.AddTransient<IntroJsInteropEvents>();
-            services.AddScoped<IntroJsOptions>(_ => options);
+            services.AddTransient<IntroJsOptions>(_ => options);
 
             return services;
         }
@@ -41,7 +41,7 @@ namespace Blazor.IntroJs
         {
             services.AddTransient<IntroJsInterop>();
             services.AddTransient<IntroJsInteropEvents>();
-            services.AddScoped<IntroJsOptions>(_ => func.Invoke());
+            services.AddTransient<IntroJsOptions>(_ => func.Invoke());
 
             return services;
         }
