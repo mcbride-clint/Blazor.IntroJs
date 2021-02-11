@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject Blazor.IntroJs.IntroJsInterop introJs
+@implements IDisposable
 
 <h1 data-intro="Hello World!" data-hint="Hint-Hint">Hello, world!</h1>
 
@@ -26,5 +27,10 @@ Welcome to your new app.
     private async Task AddHints()
     {
         await introJs.AddHints();
+    }
+
+    public void Dispose()
+    {
+        introJs.Dispose();
     }
 }
