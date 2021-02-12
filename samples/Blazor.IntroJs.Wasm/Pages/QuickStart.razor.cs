@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Blazor.IntroJs.Wasm.Pages

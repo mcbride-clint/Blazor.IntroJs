@@ -20,6 +20,7 @@ Welcome to your new app.
                 options.NextLabel = "Changed now";
                 return options;
             })
+            .SetOption(o => o.PrevLabel = "HAHA NO LABEL")
             .GoToStepNumber(3)
             .Start();
     }

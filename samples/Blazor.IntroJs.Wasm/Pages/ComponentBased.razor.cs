@@ -18,8 +18,8 @@ namespace Blazor.IntroJs.Wasm.Pages
         protected async Task StartIntroJs()
         {
             await introJs.Start();
-        }       
-       
+        }
+
 
         protected async Task StartIntroJsClass()
         {

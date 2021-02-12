@@ -15,7 +15,7 @@ namespace Blazor.IntroJs
         private IntroJsOptions _options;
         private bool _shouldOptionsBeApplied = false;
 
-        private readonly IntroJsStatus _status; 
+        private readonly IntroJsStatus _status;
 
         /// <summary>
         /// Instantiate a new instance IntroJsInterop
@@ -69,6 +69,19 @@ namespace Blazor.IntroJs
             return this;
         }
 
+        /// <summary>
+        /// Set a single or group of options to the introJs object.
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public IntroJsInterop SetOption(Action<IntroJsOptions> action)
+        {
+            _options = CreateNewOptions();
+            action.Invoke(_options);
+            _shouldOptionsBeApplied = true;
+            return this;
+        }
+
         private async Task ShouldUpdateOptions()
         {
             if (_shouldOptionsBeApplied)
@@ -96,7 +109,7 @@ namespace Blazor.IntroJs
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.start", _id, _status, elementSelection);
-        }      
+        }
 
         /// <summary>
         /// Go to specific step of introduction.
