@@ -1,6 +1,6 @@
 ﻿@page "/"
 @inject Blazor.IntroJs.IntroJsInterop introJs
-@implements IDisposable
+@implements IAsyncDisposable
 
 <h1 data-intro="Hello World!" data-hint="Hint-Hint">Hello, world!</h1>
 
@@ -18,7 +18,6 @@ Welcome to your new app.
             .SetOptions(options =>
             {
                 options.NextLabel = "Changed now";
-                return options;
             })
             .SetOption(o => o.PrevLabel = "HAHA NO LABEL")
             .GoToStepNumber(3)
@@ -30,8 +29,9 @@ Welcome to your new app.
         await introJs.AddHints();
     }
 
-    public void Dispose()
+    public async ValueTask DisposeAsync()
     {
+        await introJs.RemoveHints();
         introJs.Dispose();
     }
 }

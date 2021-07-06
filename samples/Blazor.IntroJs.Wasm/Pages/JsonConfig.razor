@@ -16,13 +16,18 @@
 
     private async Task ShowIntro()
     {
-        var options = IntroJs.CreateNewOptions();
-        options.Steps = new List<IntroJsStep>();
-        options.Steps.Add(new IntroJsStep() { Element = "#t1", Intro = "Test Manual Setup 1", Title = "Test Title" });
-        options.Steps.Add(new IntroJsStep() { Element = "#t2", Intro = "Test Manual Setup 2", Title = "Test Title" });
-        options.Steps.Add(new IntroJsStep() { Element = "#t3", Intro = "Test Manual Setup 3", Title = "Test Title" });
-        options.Steps.Add(new IntroJsStep() { Intro = "Test Floating Element", Title = "Test Title" });
+        string json = "";
+        IntroJs.SetOptions(options =>
+        {
+            options.Steps = new List<IntroJsStep>();
+            options.Steps.Add(new IntroJsStep() { Element = "#t1", Intro = "Test Manual Setup 1", Title = "Test Title" });
+            options.Steps.Add(new IntroJsStep() { Element = "#t2", Intro = "Test Manual Setup 2", Title = "Test Title" });
+            options.Steps.Add(new IntroJsStep() { Element = "#t3", Intro = "Test Manual Setup 3", Title = "Test Title" });
+            options.Steps.Add(new IntroJsStep() { Intro = "Test Floating Element", Title = "Test Title" });
 
-        await IntroJs.SetOptions(_ => options).Start();
+            json = System.Text.Json.JsonSerializer.Serialize(options);
+        });
+
+        await IntroJs.SetOptions(json).Start();
     }
 }

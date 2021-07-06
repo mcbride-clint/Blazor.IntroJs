@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System;
 using System.Threading.Tasks;
 
 namespace Blazor.IntroJs.Wasm.Pages
 {
-    public partial class QuickStart : ComponentBase
+    public partial class QuickStart : ComponentBase, IAsyncDisposable
     {
         [Inject] private IntroJsInterop IntroJs { get; set; }
+
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -29,12 +31,17 @@ namespace Blazor.IntroJs.Wasm.Pages
 
         protected async Task StartIntroJsClass()
         {
-            await IntroJs.Start("#onlyThese");
+            await IntroJs.Start(".onlyThese");
         }
 
         protected async Task AddHints()
         {
             await IntroJs.ShowHints();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await IntroJs.DisposeAsync();
         }
     }
 }

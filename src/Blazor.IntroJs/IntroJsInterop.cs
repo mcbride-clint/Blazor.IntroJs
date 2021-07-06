@@ -1,5 +1,6 @@
 ﻿using Microsoft.JSInterop;
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Blazor.IntroJs
@@ -40,11 +41,11 @@ namespace Blazor.IntroJs
             _status = new IntroJsStatus();
         }
 
-        private async Task Initialize()
+        private async ValueTask Initialize()
         {
             var objRef = DotNetObjectReference.Create(_events);
-            await _jsRuntime.InvokeVoidAsync("blazorIntroJs.initialize", _id, objRef);
 
+            await _jsRuntime.InvokeVoidAsync("blazorIntroJs.initialize", _id, objRef);
             await ShouldUpdateOptions();
         }
 
@@ -52,9 +53,24 @@ namespace Blazor.IntroJs
         /// Create a new instance of current IntroJs options.  Can be used for one-off settings or manual configuration of Steps and Hints.
         /// </summary>
         /// <returns></returns>
-        public IntroJsOptions CreateNewOptions()
+        protected IntroJsOptions CopyExistingOptions()
         {
             return _options.Clone();
+        }
+
+        /// <summary>
+        /// Set options with a json formatted object
+        /// </summary>
+        /// <param name="jsonOptions"></param>
+        /// <returns></returns>
+        public IntroJsInterop SetOptions(string jsonOptions)
+        {
+            _options = JsonSerializer.Deserialize<IntroJsOptions>(jsonOptions, 
+                new JsonSerializerOptions() { 
+                    PropertyNameCaseInsensitive = true, 
+                    AllowTrailingCommas = true });
+            _shouldOptionsBeApplied = true;
+            return this;
         }
 
         /// <summary>
@@ -62,9 +78,10 @@ namespace Blazor.IntroJs
         /// </summary>
         /// <param name="func"></param>
         /// <returns></returns>
-        public IntroJsInterop SetOptions(Func<IntroJsOptions, IntroJsOptions> func)
+        public IntroJsInterop SetOptions(Action<IntroJsOptions> func)
         {
-            _options = func.Invoke(CreateNewOptions());
+            _options = CopyExistingOptions();
+            func.Invoke(_options);
             _shouldOptionsBeApplied = true;
             return this;
         }
@@ -76,13 +93,13 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public IntroJsInterop SetOption(Action<IntroJsOptions> action)
         {
-            _options = CreateNewOptions();
+            _options = CopyExistingOptions();
             action.Invoke(_options);
             _shouldOptionsBeApplied = true;
             return this;
         }
 
-        private async Task ShouldUpdateOptions()
+        private async ValueTask ShouldUpdateOptions()
         {
             if (_shouldOptionsBeApplied)
             {
@@ -94,7 +111,7 @@ namespace Blazor.IntroJs
         /// Start the introduction for defined element(s).
         /// </summary>
         /// <returns></returns>
-        public async Task Start()
+        public async ValueTask Start()
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.start", _id, _status);
@@ -105,7 +122,7 @@ namespace Blazor.IntroJs
         /// </summary>
         /// <param name="elementSelection">Specific id (#) or class (.)</param>
         /// <returns></returns>
-        public async Task Start(string elementSelection)
+        public async ValueTask Start(string elementSelection)
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.start", _id, _status, elementSelection);
@@ -139,7 +156,7 @@ namespace Blazor.IntroJs
         /// </summary>
         /// <param name="force">Exit the tour even if introJs.onbeforeexit returns false</param>
         /// <returns></returns>
-        public async Task Exit(bool force = false)
+        public async ValueTask Exit(bool force = false)
         {
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.exit", _id, force);
         }
@@ -148,7 +165,7 @@ namespace Blazor.IntroJs
         /// To refresh and order layers manually. This function rearranges all hints as well.
         /// </summary>
         /// <returns></returns>
-        public async Task Refresh()
+        public async ValueTask Refresh()
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.refresh", _id);
@@ -159,7 +176,7 @@ namespace Blazor.IntroJs
         /// </summary>
         /// <param name="hintId"></param>
         /// <returns></returns>
-        public async Task ShowHint(int hintId)
+        public async ValueTask ShowHint(int hintId)
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.showHint", _id, hintId);
@@ -169,7 +186,7 @@ namespace Blazor.IntroJs
         /// Show all hints.
         /// </summary>
         /// <returns></returns>
-        public async Task ShowHints()
+        public async ValueTask ShowHints()
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.showHints", _id);
@@ -179,7 +196,7 @@ namespace Blazor.IntroJs
         /// To add available hints to the page (using data-hint or JSON)
         /// </summary>
         /// <returns></returns>
-        public async Task AddHints()
+        public async ValueTask AddHints()
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.addHints", _id);
@@ -189,7 +206,7 @@ namespace Blazor.IntroJs
         /// Hides all hints on the page.
         /// </summary>
         /// <returns></returns>
-        public async Task HideHints()
+        public async ValueTask HideHints()
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.hideHints", _id);
@@ -200,7 +217,7 @@ namespace Blazor.IntroJs
         /// </summary>
         /// <param name="stepId"></param>
         /// <returns></returns>
-        public async Task HideHint(int stepId)
+        public async ValueTask HideHint(int stepId)
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.hideHint", _id, stepId);
@@ -211,7 +228,7 @@ namespace Blazor.IntroJs
         /// </summary>
         /// <param name="stepId"></param>
         /// <returns></returns>
-        public async Task ShowHintDialog(int stepId)
+        public async ValueTask ShowHintDialog(int stepId)
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.showHintDialog", _id, stepId);
@@ -223,7 +240,7 @@ namespace Blazor.IntroJs
         /// Not sure if supported.
         /// </summary>
         /// <returns></returns>
-        public async Task RemoveHints()
+        public async ValueTask RemoveHints()
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.removeHints", _id);
@@ -235,7 +252,7 @@ namespace Blazor.IntroJs
         /// Not sure if supported.
         /// </summary>
         /// <returns></returns>
-        public async Task RemoveHints(int step)
+        public async ValueTask RemoveHints(int step)
         {
             await Initialize();
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.removeHints", _id, step);
@@ -245,7 +262,7 @@ namespace Blazor.IntroJs
         /// Sets the IntroJs Default Options Object
         /// </summary>
         /// <returns></returns>
-        private async Task ApplyOptions()
+        private async ValueTask ApplyOptions()
         {
             await _jsRuntime.InvokeVoidAsync("blazorIntroJs.setOptions", _id, _options);
         }
@@ -254,7 +271,7 @@ namespace Blazor.IntroJs
         /// Resets all IntroJs Options to default settings.  Removes configured settings for application.
         /// </summary>
         /// <returns></returns>
-        public async Task ResetOptions()
+        public async ValueTask ResetOptions()
         {
             _options = new IntroJsOptions();
             await ApplyOptions();
@@ -358,7 +375,21 @@ namespace Blazor.IntroJs
         /// </summary>
         public void Dispose()
         {
-            _jsRuntime.InvokeVoidAsync("blazorIntroJs.dipose", _id);
+#pragma warning disable CA2012 // Use ValueTasks correctly
+            _ = DisposeAsync();
+#pragma warning restore CA2012 // Use ValueTasks correctly
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Removes the instance of introJs from JS memory
+        /// </summary>
+        public async ValueTask DisposeAsync()
+        {
+            await _jsRuntime.InvokeVoidAsync("blazorIntroJs.dispose", _id);
+#pragma warning disable CA1816 // Dispose methods should call SuppressFinalize
+            GC.SuppressFinalize(this);
+#pragma warning restore CA1816 // Dispose methods should call SuppressFinalize
         }
     }
 }

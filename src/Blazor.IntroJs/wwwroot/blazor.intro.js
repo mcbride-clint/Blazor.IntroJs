@@ -117,6 +117,7 @@ window.blazorIntroJs = {
         this.introJsInstances[id].addEvents(dotNetRef);
     },
     dispose: function (id) {
+        this.removeHints(id);
         delete this.introJsInstances[id];
     }
 };
