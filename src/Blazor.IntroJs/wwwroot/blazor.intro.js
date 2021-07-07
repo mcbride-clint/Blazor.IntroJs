@@ -122,33 +122,41 @@ window.blazorIntroJs = {
     }
 };
 
+introJs.fn.getEventArgs = function () {
+    let args = {
+        CurrentStep: this._currentStep,
+        Direction: this._direction
+    };
+    return args;
+}
+
 introJs.fn.addEvents = function (dotNetRef) {
     return this
         .oncomplete(function () {
-            dotNetRef.invokeMethod("OnCompleteJsEvent");
+            dotNetRef.invokeMethod("OnCompleteJsEvent", this.getEventArgs());
         })
         .onexit(function () {
-            dotNetRef.invokeMethod("OnExitJsEvent");
+            dotNetRef.invokeMethod("OnExitJsEvent", this.getEventArgs());
         })
         .onchange(function (targetElement) {
-            dotNetRef.invokeMethodAsync("OnChangeJsEvent", targetElement);
+            dotNetRef.invokeMethodAsync("OnChangeJsEvent", targetElement, this.getEventArgs());
         })
         .onbeforechange(function (targetElement) {
-            dotNetRef.invokeMethodAsync("OnBeforeChangeJsEvent", targetElement);
+            return dotNetRef.invokeMethod("OnBeforeChangeJsEvent", targetElement, this.getEventArgs());
         })
         .onafterchange(function (targetElement) {
-            dotNetRef.invokeMethodAsync("OnAfterChangeJsEvent", targetElement);
+            dotNetRef.invokeMethodAsync("OnAfterChangeJsEvent", targetElement, this.getEventArgs());
         })
         .onhintclick(function () {
-            dotNetRef.invokeMethod("OnHintClickJsEvent");
+            dotNetRef.invokeMethod("OnHintClickJsEvent", this.getEventArgs());
         })
         .onhintsadded(function () {
-            dotNetRef.invokeMethod("OnHintsAddedJsEvent");
+            dotNetRef.invokeMethod("OnHintsAddedJsEvent", this.getEventArgs());
         })
         .onhintclose(function () {
-            dotNetRef.invokeMethod("OnHintCloseJsEvent");
+            dotNetRef.invokeMethod("OnHintCloseJsEvent", this.getEventArgs());
         })
         .onbeforeexit(function () {
-            return dotNetRef.invokeMethod("OnBeforeExitJsEvent");
+            return dotNetRef.invokeMethod("OnBeforeExitJsEvent", this.getEventArgs());
         });
 }

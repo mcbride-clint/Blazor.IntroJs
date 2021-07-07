@@ -14,12 +14,60 @@ namespace Blazor.IntroJs.Wasm.Pages
             if (firstRender)
             {
                 await IntroJs
-                    .OnBeforeExit(OnExit)
+                    .OnHintClick(OnHint)
+                    .OnBeforeChange(OnBeforeChange)
+                    .OnAfterChange(OnAfterChange)
+                    .OnChange(OnChange)
+                    .OnComplete(OnComplete)
+                    .OnExit(OnExit)
+                    .OnHintClose(OnHintClose)
+                    .OnHintsAdded(OnHintsAdded)
                     .Start();
             }
         }
 
-        protected bool OnExit()
+        private void OnHintsAdded(IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        private void OnHintClose(IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        private void OnExit(IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        private void OnComplete(IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        private void OnChange(object obj, IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        private void OnAfterChange(object obj, IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        private bool OnBeforeChange(object obj, IntroJsArgs args)
+        {
+            
+            return args.CurrentStep == 0;
+        }
+
+        private void OnHint(IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        protected bool OnBeforeExit(IntroJsArgs args)
         {
             return true;
         }
