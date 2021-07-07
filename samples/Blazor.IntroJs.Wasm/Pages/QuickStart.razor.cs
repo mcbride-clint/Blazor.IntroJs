@@ -17,6 +17,42 @@ namespace Blazor.IntroJs.Wasm.Pages
             }
         }
 
+        private void OnHintsAdded(IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        private void OnHintClose(IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        private void OnExit(IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        private void OnComplete(IntroJsArgs args)
+        {
+            var x = 0;
+        }
+
+        private void OnChange(IntroJsArgs args,object obj)
+        {
+            var x = 0;
+        }
+
+        private void OnAfterChange(IntroJsArgs args,object obj)
+        {
+            var x = 0;
+        }
+
+        private bool OnBeforeChange(IntroJsArgs args,object obj)
+        {
+            
+            return args.CurrentStep == 0;
+        }
+
         protected async Task StartIntroJs()
         {
             await IntroJs.Start();
