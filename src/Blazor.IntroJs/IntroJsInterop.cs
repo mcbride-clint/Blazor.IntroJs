@@ -65,10 +65,12 @@ namespace Blazor.IntroJs
         /// <returns></returns>
         public IntroJsInterop SetOptions(string jsonOptions)
         {
-            _options = JsonSerializer.Deserialize<IntroJsOptions>(jsonOptions, 
-                new JsonSerializerOptions() { 
-                    PropertyNameCaseInsensitive = true, 
-                    AllowTrailingCommas = true });
+            _options = JsonSerializer.Deserialize<IntroJsOptions>(jsonOptions,
+                new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true,
+                    AllowTrailingCommas = true
+                });
             _shouldOptionsBeApplied = true;
             return this;
         }
@@ -294,7 +296,7 @@ namespace Blazor.IntroJs
         /// <summary>
         /// Set callback for when introduction completed.
         /// </summary>
-        public IntroJsInterop OnComplete(Action callback)
+        public IntroJsInterop OnComplete(Action<IntroJsArgs> callback)
         {
             _events.OnComplete = callback;
             return this;
@@ -303,7 +305,7 @@ namespace Blazor.IntroJs
         /// Given callback function will be called after starting a new step of introduction. 
         /// The callback function receives the element of the new step as an argument.
         /// </summary>
-        public IntroJsInterop OnAfterChange(Action<object> callback)
+        public IntroJsInterop OnAfterChange(Action<IntroJsArgs, object> callback)
         {
             _events.OnAfterChange = callback;
             return this;
@@ -312,7 +314,7 @@ namespace Blazor.IntroJs
         /// Given callback function will be called before starting a new step of introduction. 
         /// The callback function receives the element of the new step as an argument.
         /// </summary>
-        public IntroJsInterop OnBeforeChange(Action<object> callback)
+        public IntroJsInterop OnBeforeChange(Func<IntroJsArgs, object, bool> callback)
         {
             _events.OnBeforeChange = callback;
             return this;
@@ -322,7 +324,7 @@ namespace Blazor.IntroJs
         /// Given callback function will be called after completing each step. 
         /// The callback function receives the element of the new step as an argument.
         /// </summary>
-        public IntroJsInterop OnChange(Action<object> callback)
+        public IntroJsInterop OnChange(Action<IntroJsArgs, object> callback)
         {
             _events.OnChange = callback;
             return this;
@@ -331,7 +333,7 @@ namespace Blazor.IntroJs
         /// Works exactly same as onexit but calls before closing the tour. 
         /// Also, returning false would prevent the tour from closing.
         /// </summary>
-        public IntroJsInterop OnBeforeExit(Func<bool> callback)
+        public IntroJsInterop OnBeforeExit(Func<IntroJsArgs, bool> callback)
         {
             _events.OnBeforeExit = callback;
             return this;
@@ -340,7 +342,7 @@ namespace Blazor.IntroJs
         /// Set callback to exit of introduction. 
         /// Exit also means pressing ESC key and clicking on the overlay layer by the user.
         /// </summary>
-        public IntroJsInterop OnExit(Action callback)
+        public IntroJsInterop OnExit(Action<IntroJsArgs> callback)
         {
             _events.OnExit = callback;
             return this;
@@ -348,7 +350,7 @@ namespace Blazor.IntroJs
         /// <summary>
         /// Invokes given function when user clicks on one of hints.
         /// </summary>
-        public IntroJsInterop OnHintClick(Action callback)
+        public IntroJsInterop OnHintClick(Action<IntroJsArgs> callback)
         {
             _events.OnHintClick = callback;
             return this;
@@ -356,7 +358,7 @@ namespace Blazor.IntroJs
         /// <summary>
         /// Set callback for when a single hint removes from page (e.g. when user clicks on “Got it” button)
         /// </summary>
-        public IntroJsInterop OnHintClose(Action callback)
+        public IntroJsInterop OnHintClose(Action<IntroJsArgs> callback)
         {
             _events.OnHintClose = callback;
             return this;
@@ -364,7 +366,7 @@ namespace Blazor.IntroJs
         /// <summary>
         /// Invokes given callback function after adding and rendering all hints.
         /// </summary>
-        public IntroJsInterop OnHintsAdded(Action callback)
+        public IntroJsInterop OnHintsAdded(Action<IntroJsArgs> callback)
         {
             _events.OnHintsAdded = callback;
             return this;
