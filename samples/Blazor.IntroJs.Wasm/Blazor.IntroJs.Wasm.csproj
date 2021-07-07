@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Blazor.IntroJs\Blazor.IntroJs.csproj" />
+    <ProjectReference Include="..\..\Source\Blazor.IntroJs\Blazor.IntroJs.csproj" />
   </ItemGroup>
 
   <ItemGroup>

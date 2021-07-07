@@ -1,0 +1,753 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Blazor.IntroJs</name>
+    </assembly>
+    <members>
+        <member name="T:Blazor.IntroJs.Components.BlazorIntro">
+            <summary>
+            Wraps inner syntax in a IntroJs step
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.Components.BlazorIntro.Title">
+            <summary>
+            Title displayed at the top of the tooltip
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.Components.BlazorIntro.Hint">
+            <summary>
+            Hint Text
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.Components.BlazorIntro.HintPosition">
+            <summary>
+            Hint Positioning on the element
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.Components.BlazorIntro.Text">
+            <summary>
+            Text to display on Intro tooltip
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.Components.BlazorIntro.Step">
+            <summary>
+            Step order of this intro
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.Components.BlazorIntro.Position">
+            <summary>
+            Positioning of the popout tooltip in relation to the targeted content
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.Components.BlazorIntro.Class">
+            <summary>
+            Class to identify groups of tooltips to display
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.Components.BlazorIntro.Id">
+            <summary>
+            Id to identify this tooltip
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.Components.BlazorIntro.ChildContent">
+            <summary>
+            Content to target with the Intro Js tooltip
+            </summary>
+        </member>
+        <member name="T:Blazor.IntroJs.IServiceExtensions">
+            <summary>
+            IServiceCollection Extensions to add IntroJs objects to services
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IServiceExtensions.AddIntroJs(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Adds IntroJs classes to Service collection using default IntroJs Options
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IServiceExtensions.AddIntroJs(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Func{Blazor.IntroJs.IntroJsOptions})">
+            <summary>
+            Adds IntroJs classes to Service collection using IntroJsOptions created by function
+            </summary>
+            <param name="services"></param>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Blazor.IntroJs.IntroJsInterop">
+            <summary>
+            Used to interact with the IntroJs javascript functions through JSInterop
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.#ctor(Microsoft.JSInterop.IJSRuntime,Blazor.IntroJs.IntroJsInteropEvents,Blazor.IntroJs.IntroJsOptions)">
+            <summary>
+            Instantiate a new instance IntroJsInterop
+            </summary>
+            <param name="jsRuntime"></param>
+            <param name="events"></param>
+            <param name="options"></param>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.CopyExistingOptions">
+            <summary>
+            Create a new instance of current IntroJs options.  Can be used for one-off settings or manual configuration of Steps and Hints.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.SetOptions(System.String)">
+            <summary>
+            Set options with a json formatted object
+            </summary>
+            <param name="jsonOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.SetOptions(System.Action{Blazor.IntroJs.IntroJsOptions})">
+            <summary>
+            Set a group of options to the introJs object.
+            </summary>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.SetOption(System.Action{Blazor.IntroJs.IntroJsOptions})">
+            <summary>
+            Set a single or group of options to the introJs object.
+            </summary>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.Start">
+            <summary>
+            Start the introduction for defined element(s).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.Start(System.String)">
+            <summary>
+            Start the introduction for defined element(s).
+            </summary>
+            <param name="elementSelection">Specific id (#) or class (.)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.GoToStep(System.Int32)">
+            <summary>
+            Go to specific step of introduction.
+            </summary>
+            <param name="step"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.GoToStepNumber(System.Int32)">
+            <summary>
+            Go to specific step of introduction with the concrete step. This differs from goToStep in the way that data-step does not have be continuous to pick the desired element.
+            </summary>
+            <param name="step"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.Exit(System.Boolean)">
+            <summary>
+            Exit the introduction.
+            </summary>
+            <param name="force">Exit the tour even if introJs.onbeforeexit returns false</param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.Refresh">
+            <summary>
+            To refresh and order layers manually. This function rearranges all hints as well.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.ShowHint(System.Int32)">
+            <summary>
+            Show the hint with given hintId.
+            </summary>
+            <param name="hintId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.ShowHints">
+            <summary>
+            Show all hints.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.AddHints">
+            <summary>
+            To add available hints to the page (using data-hint or JSON)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.HideHints">
+            <summary>
+            Hides all hints on the page.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.HideHint(System.Int32)">
+            <summary>
+            Hides the hint with given stepId. The stepId is an integer and it’s the value of data-step attribute on the hint element.
+            </summary>
+            <param name="stepId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.ShowHintDialog(System.Int32)">
+            <summary>
+            Shows the popup dialog next to the hint with given stepId. The stepId is an integer and it’s the value of data-step attribute on the hint element.
+            </summary>
+            <param name="stepId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.RemoveHints">
+            <summary>
+            Found in the source code.  
+            Seems to actually hide the Hints and allows them to be reshown later.  
+            Not sure if supported.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.RemoveHints(System.Int32)">
+            <summary>
+            Found in the source code.  
+            Seems to actually hide the Hints and allows them to be reshown later.  
+            Not sure if supported.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.ApplyOptions">
+            <summary>
+            Sets the IntroJs Default Options Object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.ResetOptions">
+            <summary>
+            Resets all IntroJs Options to default settings.  Removes configured settings for application.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.ClearEvents">
+            <summary>
+            Reset all IntroJs Events
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.OnComplete(System.Action{Blazor.IntroJs.IntroJsArgs})">
+            <summary>
+            Set callback for when introduction completed.
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.OnAfterChange(System.Action{System.Object,Blazor.IntroJs.IntroJsArgs})">
+            <summary>
+            Given callback function will be called after starting a new step of introduction. 
+            The callback function receives the element of the new step as an argument.
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.OnBeforeChange(System.Func{System.Object,Blazor.IntroJs.IntroJsArgs,System.Boolean})">
+            <summary>
+            Given callback function will be called before starting a new step of introduction. 
+            The callback function receives the element of the new step as an argument.
+            Also, returning false would prevent the tour from procedding to the next step.
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.OnChange(System.Action{System.Object,Blazor.IntroJs.IntroJsArgs})">
+            <summary>
+            Set callback to change of each step of introduction. 
+            Given callback function will be called after completing each step. 
+            The callback function receives the element of the new step as an argument.
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.OnBeforeExit(System.Func{Blazor.IntroJs.IntroJsArgs,System.Boolean})">
+            <summary>
+            Works exactly same as onexit but calls before closing the tour. 
+            Also, returning false would prevent the tour from closing.
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.OnExit(System.Action{Blazor.IntroJs.IntroJsArgs})">
+            <summary>
+            Set callback to exit of introduction. 
+            Exit also means pressing ESC key and clicking on the overlay layer by the user.
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.OnHintClick(System.Action{Blazor.IntroJs.IntroJsArgs})">
+            <summary>
+            Invokes given function when user clicks on one of hints.
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.OnHintClose(System.Action{Blazor.IntroJs.IntroJsArgs})">
+            <summary>
+            Set callback for when a single hint removes from page (e.g. when user clicks on “Got it” button)
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.OnHintsAdded(System.Action{Blazor.IntroJs.IntroJsArgs})">
+            <summary>
+            Invokes given callback function after adding and rendering all hints.
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.Dispose">
+            <summary>
+            Removes the instance of introJs from JS memory
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInterop.DisposeAsync">
+            <summary>
+            Removes the instance of introJs from JS memory
+            </summary>
+        </member>
+        <member name="T:Blazor.IntroJs.IntroJsHint">
+            <summary>
+            Intro Js Hint Object to be passed in IntroJsOptions Object
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsHint.Hint">
+            <summary>
+            Text to be displayed in the Hint
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsHint.Element">
+            <summary>
+            Element that the hint will be associated with
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsHint.HintPosition">
+            <summary>
+            Position of hint on the associated object.  Use the IntroJsHintPositionStrings static constants
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsHint.HintAnimation">
+            <summary>
+            Enable or Disable the ahow animation
+            </summary>
+        </member>
+        <member name="T:Blazor.IntroJs.IntroJsHintPositionStrings">
+            <summary>
+            String to Aid in selecting the hint selection position relative to the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPositionStrings.TopMiddle">
+            <summary>
+            Display at the top middle of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPositionStrings.TopLeft">
+            <summary>
+            Display at the top left of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPositionStrings.TopRight">
+            <summary>
+            Display at the top right of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPositionStrings.BottomLeft">
+            <summary>
+            Display at the bottom left of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPositionStrings.BottomRight">
+            <summary>
+            Display at the bottom right of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPositionStrings.BottomMiddle">
+            <summary>
+            Display at the middle left of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPositionStrings.MiddleLeft">
+            <summary>
+            Display at the middle left of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPositionStrings.MidleRight">
+            <summary>
+            Display at the bottom right of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPositionStrings.MiddleMiddle">
+            <summary>
+            Display at the center of the target element
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsHintPositionStrings.ConvertToString(Blazor.IntroJs.IntroJsHintPosition)">
+            <summary>
+            Converts the Hint Position Enumeration to the correct IntroJs javascript string syntax
+            </summary>
+            <param name="selection"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Blazor.IntroJs.IntroJsHintPosition">
+            <summary>
+            Enumeration to Aid in selecting the hint selection position relative to the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPosition.TopMiddle">
+            <summary>
+            Display at the top middle of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPosition.TopLeft">
+            <summary>
+            Display at the top left of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPosition.TopRight">
+            <summary>
+            Display at the top right of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPosition.BottomLeft">
+            <summary>
+            Display at the bottom left of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPosition.BottomRight">
+            <summary>
+            Display at the bottom right of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPosition.BottomMiddle">
+            <summary>
+            Display at the bottom middle of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPosition.MiddleLeft">
+            <summary>
+            Display at the middle left of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPosition.MidleRight">
+            <summary>
+            Display at the bottom right of the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsHintPosition.MiddleMiddle">
+            <summary>
+            Display at the center of the target element
+            </summary>
+        </member>
+        <member name="T:Blazor.IntroJs.IntroJsInteropEvents">
+            <summary>
+            IntroJs Events that are triggered via JavaScript
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsInteropEvents.OnComplete">
+            <summary>
+            Set callback for when introduction completed.
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsInteropEvents.OnExit">
+            <summary>
+            Set callback to exit of introduction. 
+            Exit also means pressing ESC key and clicking on the overlay layer by the user.
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsInteropEvents.OnChange">
+            <summary>
+            Set callback to change of each step of introduction. 
+            Given callback function will be called after completing each step. 
+            The callback function receives the element of the new step as an argument.
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsInteropEvents.OnBeforeChange">
+            <summary>
+            Given callback function will be called before starting a new step of introduction. 
+            The callback function receives the element of the new step as an argument.
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsInteropEvents.OnAfterChange">
+            <summary>
+            Given callback function will be called after starting a new step of introduction. 
+            The callback function receives the element of the new step as an argument.
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsInteropEvents.OnBeforeExit">
+            <summary>
+            Works exactly same as onexit but calls before closing the tour. 
+            Also, returning false would prevent the tour from closing.
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsInteropEvents.OnHintClick">
+            <summary>
+            Invokes given function when user clicks on one of hints.
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsInteropEvents.OnHintsAdded">
+            <summary>
+            Invokes given callback function after adding and rendering all hints.
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsInteropEvents.OnHintClose">
+            <summary>
+            Set callback for when a single hint removes from page (e.g. when user clicks on “Got it” button)
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInteropEvents.ClearEvents">
+            <summary>
+            Resets all event callbacks to null
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInteropEvents.OnCompleteJsEvent(Blazor.IntroJs.IntroJsArgs)">
+            <summary>
+            Method to Trigger OnComplete Action.  JsInvokable
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInteropEvents.OnExitJsEvent(Blazor.IntroJs.IntroJsArgs)">
+            <summary>
+            Method to Trigger OnExit Action.  JsInvokable
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInteropEvents.OnChangeJsEvent(System.Object,Blazor.IntroJs.IntroJsArgs)">
+            <summary>
+            Method to Trigger OnChange Action.  JsInvokable
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInteropEvents.OnBeforeChangeJsEvent(System.Object,Blazor.IntroJs.IntroJsArgs)">
+            <summary>
+            Method to Trigger OnBeforeChange Action.  JsInvokable
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInteropEvents.OnAfterChangeJsEvent(System.Object,Blazor.IntroJs.IntroJsArgs)">
+            <summary>
+            Method to Trigger OnAfterChange Action.  JsInvokable
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInteropEvents.OnHintClickJsEvent(Blazor.IntroJs.IntroJsArgs)">
+            <summary>
+            Method to Trigger OnHintClick Action.  JsInvokable
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInteropEvents.OnHintsAddedJsEvent(Blazor.IntroJs.IntroJsArgs)">
+            <summary>
+            Method to Trigger OnHintsAdded Action.  JsInvokable
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInteropEvents.OnHintCloseJsEvent(Blazor.IntroJs.IntroJsArgs)">
+            <summary>
+            Method to Trigger OnHintClose Action.  JsInvokable
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsInteropEvents.OnBeforeExitJsEvent(Blazor.IntroJs.IntroJsArgs)">
+            <summary>
+            Method to Trigger OnBeforeExit Func.  JsInvokable
+            </summary>
+            <returns>bool</returns>
+        </member>
+        <member name="T:Blazor.IntroJs.IntroJsOptions">
+            <summary>
+            IntroJs Options
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.NextLabel">
+            <summary>
+            Next button label in tooltip box
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.PrevLabel">
+            <summary>
+            Previous button label in tooltip box
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.SkipLabel">
+            <summary>
+            Skip button label in tooltip box
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.DoneLabel">
+            <summary>
+            Done button label in tooltip box
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.HidePrev">
+            <summary>
+            Hide previous button in the first step? 
+            Otherwise, it will be disabled button.
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.HideNext">
+            <summary>
+            Hide next button in the last step? 
+            Otherwise, it will be disabled button (note{get;set;} = this will also hide the "Done" button)
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.NextToDone">
+            <summary>
+            Change the Next button to Done in the last step of the intro? 
+            Otherwise, it will render a disabled button
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.TooltipPosition">
+            <summary>
+            Default tooltip box position
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.TooltipClass">
+            <summary>
+            Next CSS class for tooltip boxes
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.HighlightClass">
+            <summary>
+            CSS class that is added to the helperLayer
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ExitOnEsc">
+            <summary>
+            Close introduction when pressing Escape button?
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ExitOnOverlayClick">
+            <summary>
+            Close introduction when clicking on overlay layer?
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ShowStepNumbers">
+            <summary>
+            Show step numbers in introduction?
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.KeyboardNavigation">
+            <summary>
+            Let user use keyboard to navigate the tour?
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ShowButtons">
+            <summary>
+            Show tour control buttons?
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ShowBullets">
+            <summary>
+            Show tour bullets?
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ShowProgress">
+            <summary>
+            Show tour progress?
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ScrollToElement">
+            <summary>
+            Scroll to highlighted element?
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ScrollTo">
+            <summary>
+            Should we scroll the tooltip or target element?
+            Options are: = 'element' or 'tooltip'
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ScrollPadding">
+            <summary>
+            Padding to add after scrolling when element is not in the viewport (in pixels)
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.OverlayOpacity">
+            <summary>
+            Set the overlay opacity
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.AutoPosition">
+            <summary>
+            To determine the tooltip position automatically based on the window.width/height
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.PositionPrecedence">
+            <summary>
+            Precedence of positions, when auto is enabled
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.DisableInteraction">
+            <summary>
+            Disable an interaction with element?
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.HelperElementPadding">
+            <summary>
+            Set how much padding to be used around helper element
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.HintPosition">
+            <summary>
+            Default hint position
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.HintButtonLabel">
+            <summary>
+            Hint button label
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.HintAnimation">
+            <summary>
+            Adding animation to hints?
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ButtonClass">
+            <summary>
+            Additional classes to put on the buttons
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.ProgressBarAdditionalClass">
+            <summary>
+            Additional classes to put on progress bar
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.Steps">
+            <summary>
+            List of Steps that will be included in the Intro
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsOptions.Hints">
+            <summary>
+            List of Hints that will be included in the Intro
+            </summary>
+        </member>
+        <member name="M:Blazor.IntroJs.IntroJsOptions.Clone">
+            <summary>
+            Creates a shallow copy of the current Options object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Blazor.IntroJs.IntroJsPosition">
+            <summary>
+            Enumeration to Aid in selecting the tooltip position relative to the target element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsPosition.Top">
+            <summary>
+            Display above the element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsPosition.Left">
+            <summary>
+            Display to the left of the element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsPosition.Bottom">
+            <summary>
+            Display below the element
+            </summary>
+        </member>
+        <member name="F:Blazor.IntroJs.IntroJsPosition.Right">
+            <summary>
+            Display to the right of the element
+            </summary>
+        </member>
+        <member name="T:Blazor.IntroJs.IntroJsStep">
+            <summary>
+            Intro Js Step Object to be passed in IntroJsOptions Object
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsStep.Title">
+            <summary>
+            Title to be displayed on the tooltip
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsStep.Element">
+            <summary>
+            Element that will be focused with the tooltip
+            </summary>
+        </member>
+        <member name="P:Blazor.IntroJs.IntroJsStep.Intro">
+            <summary>
+            Text to be displayed in the tooltip
+            </summary>
+        </member>
+    </members>
+</doc>
