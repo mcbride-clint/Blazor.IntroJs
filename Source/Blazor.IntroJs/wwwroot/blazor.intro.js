@@ -124,7 +124,7 @@ window.blazorIntroJs = {
 
 introJs.fn.getEventArgs = function () {
     let args = {
-        CurrentStep: this._currentStep,
+        CurrentStep: Number(this._currentStep) || 0,
         Direction: this._direction
     };
     return args;
