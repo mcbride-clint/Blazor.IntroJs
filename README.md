@@ -1,7 +1,9 @@
 # Blazor.IntroJs
 
 Blazor.IntroJs is a [IntroJs](https://introjs.com/) wrapper for Blazor.
-It attempts to keep most of the same functionality and interations and also adding in some additional Blazor specific component functionality. 
+It attempts to keep most of the same functionality and interations while also adding in some additional Blazor specific component functionality. 
+
+**IntroJs is not included in this library so you must include it yourself and follow any licensing that they require.**
 
 ## Installation
 
